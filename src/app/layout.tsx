@@ -30,7 +30,7 @@ export default function RootLayout({
       lang="en"
       className={`${syne.variable} ${manrope.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#1A1816] text-[#F8F1E6] font-manrope">
+      <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-manrope">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
