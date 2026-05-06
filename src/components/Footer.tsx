@@ -7,7 +7,7 @@ export default function Footer() {
         
         {/* Brand/Copyright Column */}
         <div className="col-span-1 md:col-span-4 flex flex-col justify-between">
-          <div className="text-2xl font-syne font-bold tracking-[0.2em] mb-12 md:mb-0">
+          <div className="text-2xl font-syncopate font-bold tracking-[0.2em] mb-12 md:mb-0">
             INTERIO
           </div>
           <div className="text-[#1A1816]/40 text-xs tracking-widest mt-auto pt-8">
@@ -17,7 +17,7 @@ export default function Footer() {
 
         {/* Links Column 1 */}
         <div className="col-span-1 md:col-span-3 md:col-start-7 flex flex-col gap-6">
-          <h4 className="font-syne text-[#B8860B] uppercase tracking-wider text-sm mb-2">Portfolio</h4>
+          <h4 className="font-syncopate text-[#B8860B] uppercase tracking-wider text-sm mb-2">Portfolio</h4>
           <Link href="#" className="text-[#1A1816]/70 hover:text-[#B8860B] transition-colors text-sm uppercase tracking-widest w-fit hover:underline underline-offset-4">Private Residences</Link>
           <Link href="#" className="text-[#1A1816]/70 hover:text-[#B8860B] transition-colors text-sm uppercase tracking-widest w-fit hover:underline underline-offset-4">Hotels & Resorts</Link>
           <Link href="#" className="text-[#1A1816]/70 hover:text-[#B8860B] transition-colors text-sm uppercase tracking-widest w-fit hover:underline underline-offset-4">Commercial Spaces</Link>
@@ -25,7 +25,7 @@ export default function Footer() {
 
         {/* Links Column 2 */}
         <div className="col-span-1 md:col-span-3 flex flex-col gap-6">
-          <h4 className="font-syne text-[#B8860B] uppercase tracking-wider text-sm mb-2">Studio</h4>
+          <h4 className="font-syncopate text-[#B8860B] uppercase tracking-wider text-sm mb-2">Studio</h4>
           <Link href="#" className="text-[#1A1816]/70 hover:text-[#B8860B] transition-colors text-sm uppercase tracking-widest w-fit hover:underline underline-offset-4">Process</Link>
           <Link href="#" className="text-[#1A1816]/70 hover:text-[#B8860B] transition-colors text-sm uppercase tracking-widest w-fit hover:underline underline-offset-4">Press</Link>
           <Link href="#" className="text-[#1A1816]/70 hover:text-[#B8860B] transition-colors text-sm uppercase tracking-widest w-fit hover:underline underline-offset-4">Privacy</Link>

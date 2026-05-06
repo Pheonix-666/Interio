@@ -72,8 +72,8 @@ export default function Carousel360() {
   return (
     <section ref={containerRef} className="relative w-full h-screen bg-[#F5F5F5] overflow-hidden flex items-center justify-center">
       <div className="absolute top-20 left-1/2 -translate-x-1/2 text-center z-10 w-full px-6">
-        <h2 className="font-syne text-4xl md:text-6xl text-[#1A1816] mb-4">Selected Works</h2>
-        <p className="font-manrope text-[#B8860B] tracking-[0.3em] uppercase text-xs md:text-sm font-semibold">
+        <h2 className="font-syncopate text-4xl md:text-6xl text-[#1A1816] mb-4">Selected Works</h2>
+        <p className="font-outfit text-[#B8860B] tracking-[0.3em] uppercase text-xs md:text-sm font-semibold">
           Scroll to Rotate Portfolio
         </p>
       </div>
@@ -99,8 +99,8 @@ export default function Carousel360() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent opacity-90"></div>
               <div className="absolute bottom-6 md:bottom-10 left-6 md:left-8 right-6 md:right-8 transition-transform duration-500 group-hover:-translate-y-2">
-                <p className="font-manrope text-[#B8860B] text-[10px] md:text-xs uppercase tracking-[0.3em] mb-2 md:mb-3 font-semibold">{project.category}</p>
-                <h3 className="font-syne text-xl md:text-3xl text-[#1A1816] leading-tight">{project.title}</h3>
+                <p className="font-outfit text-[#B8860B] text-[10px] md:text-xs uppercase tracking-[0.3em] mb-2 md:mb-3 font-semibold">{project.category}</p>
+                <h3 className="font-syncopate text-xl md:text-3xl text-[#1A1816] leading-tight">{project.title}</h3>
               </div>
             </div>
           </div>

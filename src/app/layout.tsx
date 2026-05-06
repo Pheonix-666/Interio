@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Syne, Manrope } from "next/font/google";
+import { Syncopate, Outfit } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
-  variable: "--font-syne",
+const syncopate = Syncopate({
+  variable: "--font-syncopate",
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["400", "700"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -28,9 +29,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${manrope.variable} h-full antialiased`}
+      className={`${syncopate.variable} ${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-manrope">
+      <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-outfit">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

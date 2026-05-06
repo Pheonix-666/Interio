@@ -1,40 +1,47 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Spline from '@splinetool/react-spline';
 import gsap from 'gsap';
-import Image from 'next/image';
 
 export default function SplineHero() {
   const heroTextRef = useRef<HTMLHeadingElement>(null);
-  const subTextRef = useRef<HTMLParagraphElement>(null);
+  const subTextRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Intro animation
       const tl = gsap.timeline();
-      
-      tl.fromTo(heroTextRef.current, 
-        { y: 100, opacity: 0, skewY: 10 },
-        { y: 0, opacity: 1, skewY: 0, duration: 1.5, ease: "power4.out", delay: 0.5 }
-      )
-      .fromTo(subTextRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-        "-=1"
-      );
 
-      // Mouse Parallax
+      tl.fromTo(heroTextRef.current,
+        { y: 100, opacity: 0, skewY: 10, letterSpacing: "1em" },
+        { y: 0, opacity: 1, skewY: 0, letterSpacing: "-0.05em", duration: 1.5, ease: "power4.out", delay: 0.5 }
+      )
+        .fromTo(subTextRef.current,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+          "-=1"
+        );
+
+      // Continuous floating animation
+      gsap.to(".hero-overlay", {
+        y: "+=15",
+        duration: 3,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true
+      });
+
+      // Mouse Parallax for the content overlay
       const handleMouseMove = (e: MouseEvent) => {
         const { clientX, clientY } = e;
-        const xPos = (clientX / window.innerWidth - 0.5) * 40;
-        const yPos = (clientY / window.innerHeight - 0.5) * 40;
+        const xPos = (clientX / window.innerWidth - 0.5) * 30;
+        const yPos = (clientY / window.innerHeight - 0.5) * 30;
 
-        gsap.to(containerRef.current, {
-          rotateY: xPos / 4,
-          rotateX: -yPos / 4,
-          duration: 1,
+        gsap.to(".hero-overlay-inner", {
+          x: xPos,
+          y: yPos,
+          duration: 1.5,
           ease: "power2.out"
         });
       };
@@ -47,55 +54,61 @@ export default function SplineHero() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#F5F5F5]">
+    <section ref={containerRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[#1A1816]">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
-          className="w-full h-full object-cover opacity-10 scale-105"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-60"
         >
-          <source src="https://player.vimeo.com/external/494252666.sd.mp4?s=7b03681404e138a49c69345229615a1f280a9696&profile_id=165" type="video/mp4" />
+          <source src="/hero.mp4" type="video/mp4" />
         </video>
+        {/* Subtle dark gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816]/80 via-transparent to-[#1A1816]/30"></div>
       </div>
 
-      {/* High-Quality Interior Image (3D Fallback) */}
-      <div className="absolute inset-0 z-10 opacity-60">
-        <Image 
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
-          alt="Luxury Interior Hero" 
-          fill 
-          priority
-          className="object-cover"
-        />
-      </div>
-
-      {/* Refined Hero Content */}
-      <div className="relative z-30 flex flex-col items-center justify-center text-center px-6 w-full pointer-events-none">
-        <div className="overflow-hidden">
-          <h1 
-            ref={heroTextRef}
-            className="font-syne text-[18vw] md:text-[10vw] leading-[0.85] text-[#1A1816] tracking-tighter uppercase"
+      {/* Dynamic Content Overlay */}
+      <div className="hero-overlay relative z-30 flex flex-col items-center justify-center text-center px-6 w-full pointer-events-none">
+        <div className="hero-overlay-inner backdrop-blur-md bg-white/10 p-12 md:p-20 rounded-full border border-white/20 shadow-2xl overflow-hidden">
+          <div className="overflow-hidden">
+            <h1
+              ref={heroTextRef}
+              className="font-syncopate text-[12vw] md:text-[10vw] leading-[0.85] text-white tracking-tighter uppercase"
+            >
+              INTERIO
+            </h1>
+          </div>
+          <div
+            ref={subTextRef}
+            className="mt-8 md:mt-10 flex flex-col items-center gap-6"
           >
-            INTERIO
-          </h1>
+            <div className="flex items-center gap-4">
+              <span className="w-12 h-[1px] bg-[#B8860B]"></span>
+              <p className="font-outfit text-[#B8860B] tracking-[0.4em] md:tracking-[0.6em] uppercase text-[10px] md:text-sm font-bold">
+                The Curated Space
+              </p>
+              <span className="w-12 h-[1px] bg-[#B8860B]"></span>
+            </div>
+            <p className="font-outfit text-white/70 text-[10px] md:text-xs uppercase tracking-[0.3em] max-w-xs leading-relaxed">
+              Where architectural precision meets quiet luxury.
+            </p>
+          </div>
         </div>
-        <p 
-          ref={subTextRef}
-          className="font-manrope text-[#B8860B] tracking-[0.3em] md:tracking-[0.5em] uppercase text-[10px] md:text-sm mt-8 md:mt-6 font-bold flex items-center gap-3 md:gap-4"
-        >
-          <span className="w-6 md:w-10 h-[1px] bg-[#B8860B]"></span>
-          The Curated Space
-          <span className="w-6 md:w-10 h-[1px] bg-[#B8860B]"></span>
-        </p>
+      </div>
+
+      {/* Floating UI Elements */}
+      <div className="absolute bottom-10 right-10 z-30 hidden md:flex flex-col gap-4 text-right">
+        <span className="font-syncopate text-[8px] tracking-[0.4em] text-white/50 uppercase">Coordinates: 34.0522° N, 118.2437° W</span>
+        <span className="font-syncopate text-[8px] tracking-[0.4em] text-white/50 uppercase">Est. 2024</span>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center opacity-30 select-none">
-        <span className="text-[#1A1816] text-[10px] uppercase tracking-[0.4em] mb-3 font-manrope font-bold">Explore</span>
-        <div className="w-[1px] h-16 bg-gradient-to-b from-[#1A1816] to-transparent"></div>
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center opacity-50 select-none">
+        <span className="text-white text-[10px] uppercase tracking-[0.4em] mb-3 font-outfit font-bold">Explore</span>
+        <div className="w-[1px] h-16 bg-gradient-to-b from-white to-transparent"></div>
       </div>
     </section>
   );

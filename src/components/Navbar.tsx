@@ -30,7 +30,7 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 md:px-16 py-6 md:py-8 flex justify-between items-center",
         isScrolled ? "bg-white/80 backdrop-blur-xl border-b border-[#1A1816]/5 py-4 md:py-6" : "bg-transparent"
       )}>
-        <Link href="/" className="text-2xl md:text-3xl font-syne font-bold tracking-[0.2em] text-[#1A1816]">
+        <Link href="/" className="text-xl md:text-3xl font-syncopate font-bold tracking-[0.2em] text-[#1A1816]">
           INTERIO
         </Link>
         
@@ -63,7 +63,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[100] bg-white flex flex-col p-8"
           >
             <div className="flex justify-between items-center mb-20">
-              <span className="text-2xl font-syne font-bold tracking-[0.2em] text-[#1A1816]">INTERIO</span>
+              <span className="text-xl font-syncopate font-bold tracking-[0.2em] text-[#1A1816]">INTERIO</span>
               <button 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-2 text-[#1A1816]"
@@ -83,7 +83,7 @@ export default function Navbar() {
                   <Link 
                     href={item.href} 
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-4xl font-syne font-bold text-[#1A1816] uppercase tracking-tighter hover:text-[#B8860B] transition-colors"
+                    className="text-4xl font-syncopate font-bold text-[#1A1816] uppercase tracking-tighter hover:text-[#B8860B] transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -92,8 +92,8 @@ export default function Navbar() {
             </nav>
 
             <div className="mt-auto pt-10 border-t border-[#1A1816]/10">
-              <p className="font-manrope text-xs uppercase tracking-[0.2em] text-[#1A1816]/40 mb-4">Contact Us</p>
-              <p className="font-syne text-lg text-[#1A1816]">hello@interio.studio</p>
+              <p className="font-outfit text-xs uppercase tracking-[0.2em] text-[#1A1816]/40 mb-4">Contact Us</p>
+              <p className="font-syncopate text-lg text-[#1A1816]">hello@interio.studio</p>
             </div>
           </motion.div>
         )}
