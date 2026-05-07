@@ -17,17 +17,24 @@ export default function PageLoader() {
     const logo = logoRef.current;
     if (!loader || !bar || !logo) return;
 
-    // Animate counter
+    let isLoaded = false;
     const obj = { val: 0 };
-    gsap.to(obj, {
-      val: 100,
-      duration: 2.2,
-      ease: 'power2.inOut',
+
+    // Animate counter gradually up to 90%
+    const counterAnim = gsap.to(obj, {
+      val: 90,
+      duration: 4,
+      ease: 'power1.out',
       onUpdate: () => setCount(Math.round(obj.val)),
     });
 
-    // Progress bar
-    gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 2.2, ease: 'power2.inOut', transformOrigin: 'left center' });
+    // Progress bar up to 90%
+    const barAnim = gsap.to(bar, { 
+      scaleX: 0.9, 
+      duration: 4, 
+      ease: 'power1.out', 
+      transformOrigin: 'left center' 
+    });
 
     // Logo reveal
     gsap.fromTo(logo,
@@ -35,15 +42,44 @@ export default function PageLoader() {
       { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.3 }
     );
 
-    // Exit
-    const tl = gsap.timeline({ delay: 2.5 });
-    tl.to(logo, { y: -30, opacity: 0, duration: 0.6, ease: 'power3.in' })
+    const finishLoading = () => {
+      if (isLoaded) return;
+      isLoaded = true;
+      
+      counterAnim.kill();
+      barAnim.kill();
+      
+      const tl = gsap.timeline();
+      
+      // Fast finish to 100%
+      tl.to(obj, {
+        val: 100,
+        duration: 0.4,
+        onUpdate: () => setCount(Math.round(obj.val))
+      })
+      .to(bar, { scaleX: 1, duration: 0.4 }, "-=0.4")
+      .to(logo, { y: -30, opacity: 0, duration: 0.6, ease: 'power3.in', delay: 0.1 })
       .to(loader, {
         yPercent: -100,
-        duration: 1,
+        duration: 0.8,
         ease: 'power4.inOut',
         onComplete: () => setDone(true),
       });
+    };
+
+    // Wait for window load or max 6 seconds
+    if (document.readyState === 'complete') {
+      finishLoading();
+    } else {
+      window.addEventListener('load', finishLoading);
+    }
+    
+    const timeout = setTimeout(finishLoading, 6000);
+
+    return () => {
+      window.removeEventListener('load', finishLoading);
+      clearTimeout(timeout);
+    };
   }, []);
 
   if (done) return null;

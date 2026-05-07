@@ -66,16 +66,16 @@ export default function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-[#1A1816] text-[10px] uppercase tracking-[0.4em] hover:text-[#B8860B] transition-colors duration-500 relative group font-bold"
+              className="magnetic text-[#1A1816] text-[10px] uppercase tracking-[0.4em] hover:text-[#B8860B] transition-colors duration-500 relative group font-bold px-4 py-2"
             >
               <span className="relative z-10">{item.name}</span>
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#B8860B] transition-all duration-700 ease-expo group-hover:w-full" />
+              <span className="absolute -bottom-1 left-4 w-0 h-[1px] bg-[#B8860B] transition-all duration-700 ease-expo group-hover:w-[calc(100%-2rem)]" />
             </Link>
           ))}
           <a
             href="mailto:hello@interio.studio"
             data-cursor="Write"
-            className="group relative ml-4 px-10 py-4 overflow-hidden border border-[#1A1816]/10"
+            className="group relative ml-4 px-10 py-4 overflow-hidden border border-[#1A1816]/10 magnetic"
           >
             <div className="absolute inset-0 bg-[#1A1816] transition-transform duration-700 ease-expo -translate-y-full group-hover:translate-y-0" />
             <span className="relative z-10 text-[#1A1816] group-hover:text-white text-[10px] uppercase tracking-[0.4em] transition-colors duration-500 font-bold">

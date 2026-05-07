@@ -112,7 +112,7 @@ export default function Carousel360() {
                 src={project.image} 
                 alt={project.title} 
                 fill 
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 280px, 450px"
                 className="object-cover transition-transform duration-[4s] ease-out group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-40"></div>

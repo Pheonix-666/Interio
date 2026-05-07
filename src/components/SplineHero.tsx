@@ -21,9 +21,16 @@ export default function SplineHero() {
       );
 
       // Text reveal
-      tl.fromTo(heroTextRef.current,
-        { y: "100%", opacity: 0, skewY: 7 },
-        { y: "0%", opacity: 1, skewY: 0, duration: 1.8, ease: "power4.out" },
+      tl.fromTo(".hero-char",
+        { y: "100%", opacity: 0, rotateX: -90 },
+        { 
+          y: "0%", 
+          opacity: 1, 
+          rotateX: 0, 
+          duration: 1.5, 
+          stagger: 0.1, 
+          ease: "power4.out" 
+        },
         "-=1.8"
       )
       .fromTo(subTextRef.current,
@@ -32,7 +39,7 @@ export default function SplineHero() {
         "-=1.2"
       );
 
-      // Continuous floating animation for the entire content
+      // Continuous floating animation
       gsap.to(".hero-overlay", {
         y: "-=20",
         duration: 4,
@@ -41,11 +48,13 @@ export default function SplineHero() {
         yoyo: true
       });
 
-      // Mouse Parallax for the content overlay
-      const handleMouseMove = (e: MouseEvent) => {
-        const { clientX, clientY } = e;
-        const xPos = (clientX / window.innerWidth - 0.5) * 40;
-        const yPos = (clientY / window.innerHeight - 0.5) * 40;
+      // Throttled Mouse Parallax
+      let mouseX = 0;
+      let mouseY = 0;
+      
+      const updateParallax = () => {
+        const xPos = (mouseX / window.innerWidth - 0.5) * 40;
+        const yPos = (mouseY / window.innerHeight - 0.5) * 40;
 
         gsap.to(".hero-overlay-inner", {
           x: xPos,
@@ -62,7 +71,15 @@ export default function SplineHero() {
         });
       };
 
-      // Scroll-based parallax for the video
+      const handleMouseMove = (e: MouseEvent) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      };
+
+      // Use gsap ticker for throttled updates
+      gsap.ticker.add(updateParallax);
+
+      // Scroll-based parallax
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: containerRef.current,
@@ -75,7 +92,10 @@ export default function SplineHero() {
       });
 
       window.addEventListener('mousemove', handleMouseMove);
-      return () => window.removeEventListener('mousemove', handleMouseMove);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        gsap.ticker.remove(updateParallax);
+      };
     }, containerRef);
 
     return () => ctx.revert();
@@ -91,11 +111,13 @@ export default function SplineHero() {
           loop
           muted
           playsInline
+          preload="metadata"
+          poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop"
           className="w-full h-full object-cover"
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
-        {/* Subtle dark gradient overlay for text readability */}
+        {/* Subtle dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] via-[#1A1816]/20 to-[#1A1816]/60"></div>
       </div>
 
@@ -110,9 +132,13 @@ export default function SplineHero() {
           <div className="overflow-hidden">
             <h1
               ref={heroTextRef}
-              className="font-syncopate text-[14vw] md:text-[11vw] leading-[0.8] text-white tracking-tighter uppercase font-bold"
+              className="font-syncopate text-[14vw] md:text-[11vw] leading-[0.8] text-white tracking-tighter uppercase font-bold flex flex-wrap justify-center"
             >
-              INTERIO
+              {"INTERIO".split("").map((char, i) => (
+                <span key={i} className="hero-char inline-block">
+                  {char}
+                </span>
+              ))}
             </h1>
           </div>
           <div

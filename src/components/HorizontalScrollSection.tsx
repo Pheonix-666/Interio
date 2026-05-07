@@ -44,11 +44,12 @@ export default function HorizontalScrollSection() {
         gsap.to(row, {
           x: speed,
           ease: "none",
+          force3D: true, // Hardware acceleration
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
             end: () => `+=${scrollWrapperRef.current!.scrollWidth}`,
-            scrub: 2,
+            scrub: 2.5, // Smoother scrub
           }
         });
       });
@@ -64,12 +65,39 @@ export default function HorizontalScrollSection() {
             scrollTrigger: {
               trigger: img,
               start: "left center+=200",
-              containerAnimation: gsap.to(scrollWrapperRef.current, { x: () => -(scrollWrapperRef.current!.scrollWidth - window.innerWidth), ease: "none" }), // This is complex, better use direct triggers
-              // Simplified: just use scrub with the main trigger
             }
           }
         );
       });
+
+      // Subtle mouse tilt for images
+      let mouseX = 0;
+      let mouseY = 0;
+      const updateTilt = () => {
+        const xPos = (mouseX / window.innerWidth - 0.5) * 15;
+        const yPos = (mouseY / window.innerHeight - 0.5) * 15;
+
+        gsap.to('.parallax-row img', {
+          rotateY: xPos,
+          rotateX: -yPos,
+          duration: 1.5,
+          ease: "power2.out",
+          stagger: 0.02
+        });
+      };
+
+      const handleMouseMove = (e: MouseEvent) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      };
+
+      gsap.ticker.add(updateTilt);
+      window.addEventListener('mousemove', handleMouseMove);
+
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        gsap.ticker.remove(updateTilt);
+      };
 
     }, containerRef);
 
@@ -108,25 +136,57 @@ export default function HorizontalScrollSection() {
         {/* Dynamic Parallax Gallery */}
         <div className="w-fit h-screen flex flex-col justify-center gap-16 md:gap-24 shrink-0 py-16 pr-[20vw]">
           {/* Row 1 */}
-          <div className="parallax-row flex gap-12 md:gap-32 items-end h-[30vh] md:h-[35vh] -translate-x-32">
+          <div className="parallax-row flex gap-12 md:gap-32 items-end h-[30vh] md:h-[35vh] -translate-x-32" style={{ willChange: 'transform' }}>
             <div className="relative w-[40vw] md:w-[18vw] h-[80%] overflow-hidden rounded-sm bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] shrink-0 translate-y-12">
-              <Image src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" alt="Gallery 1" fill sizes="(max-width: 768px) 40vw, 18vw" className="object-cover" />
+              <Image 
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" 
+                alt="Gallery 1" 
+                fill 
+                sizes="(max-width: 768px) 40vw, 18vw" 
+                priority
+                className="object-cover" 
+              />
             </div>
             <div className="relative w-[90vw] md:w-[55vw] h-full overflow-hidden rounded-sm bg-white shadow-[0_30px_70px_rgba(0,0,0,0.15)] shrink-0">
-              <Image src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Gallery 2" fill sizes="(max-width: 768px) 90vw, 55vw" className="object-cover" />
+              <Image 
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" 
+                alt="Gallery 2" 
+                fill 
+                sizes="(max-width: 768px) 90vw, 55vw" 
+                priority
+                className="object-cover" 
+              />
             </div>
             <div className="relative w-[60vw] md:w-[30vw] h-[90%] overflow-hidden rounded-sm bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] shrink-0 -translate-y-12">
-              <Image src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" alt="Gallery 3" fill sizes="(max-width: 768px) 60vw, 30vw" className="object-cover" />
+              <Image 
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" 
+                alt="Gallery 3" 
+                fill 
+                sizes="(max-width: 768px) 60vw, 30vw" 
+                className="object-cover" 
+              />
             </div>
           </div>
 
           {/* Row 2 */}
-          <div className="parallax-row flex gap-12 md:gap-32 items-center h-[40vh] md:h-[50vh] translate-x-32">
+          <div className="parallax-row flex gap-12 md:gap-32 items-center h-[40vh] md:h-[50vh] translate-x-32" style={{ willChange: 'transform' }}>
             <div className="relative w-[75vw] md:w-[35vw] h-full overflow-hidden rounded-sm bg-white shadow-[0_40px_80px_rgba(0,0,0,0.15)] shrink-0 -translate-y-16">
-              <Image src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=1200&auto=format&fit=crop" alt="Gallery 4" fill sizes="(max-width: 768px) 75vw, 35vw" className="object-cover" />
+              <Image 
+                src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=1200&auto=format&fit=crop" 
+                alt="Gallery 4" 
+                fill 
+                sizes="(max-width: 768px) 75vw, 35vw" 
+                className="object-cover" 
+              />
             </div>
             <div className="relative w-[100vw] md:w-[60vw] h-[85%] overflow-hidden rounded-sm bg-white shadow-[0_30px_60px_rgba(0,0,0,0.1)] shrink-0">
-              <Image src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop" alt="Gallery 5" fill sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
+              <Image 
+                src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop" 
+                alt="Gallery 5" 
+                fill 
+                sizes="(max-width: 768px) 100vw, 60vw" 
+                className="object-cover" 
+              />
             </div>
             <div className="relative w-[50vw] md:w-[25vw] h-[70%] overflow-hidden rounded-sm bg-white shadow-[0_20px_40px_rgba(0,0,0,0.2)] flex items-center justify-center p-12 bg-[#1A1816] shrink-0 translate-y-20">
               <h3 className="font-syncopate text-lg md:text-3xl text-white text-center uppercase tracking-widest leading-none">Essence<br /><span className="text-[#B8860B]">of Light</span></h3>
