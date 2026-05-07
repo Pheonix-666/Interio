@@ -20,6 +20,8 @@ export const metadata: Metadata = {
 };
 
 import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
+import PageLoader from "@/components/PageLoader";
 
 export default function RootLayout({
   children,
@@ -32,6 +34,8 @@ export default function RootLayout({
       className={`${syncopate.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-outfit">
+        <PageLoader />
+        <CustomCursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

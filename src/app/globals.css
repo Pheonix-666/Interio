@@ -1,10 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gold: #B8860B; /* Darker gold for light mode visibility */
+  --color-gold: #B8860B;
   --color-surface: #FFFFFF;
   --color-accent: #1A1816;
-  
   --font-syncopate: var(--font-syncopate);
   --font-outfit: var(--font-outfit);
 }
@@ -12,6 +11,19 @@
 :root {
   --background: #F5F5F5;
   --foreground: #1A1816;
+  --gold: #B8860B;
+  --gold-light: #D4A843;
+  --gold-dark: #8B6914;
+}
+
+/* ─── Cursor ─────────────────────────────────── */
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+}
+
+/* ─── Base ───────────────────────────────────── */
+html {
+  scroll-behavior: auto; /* Lenis handles this */
 }
 
 body {
@@ -20,21 +32,39 @@ body {
   font-family: var(--font-outfit), sans-serif;
   overflow-x: hidden;
   position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Grain overlay — animated for life */
 body::after {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   background-image: url("/noise.svg");
-  opacity: 0.05;
+  opacity: 0.035;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9997;
+  animation: grain 8s steps(10) infinite;
 }
 
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* ─── Fluid Typography ───────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-syncopate), sans-serif;
   font-weight: 700;
@@ -42,20 +72,144 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
-/* Hide Scrollbar */
-::-webkit-scrollbar {
-  display: none;
+h1 { font-size: clamp(2.5rem, 10vw, 12rem); }
+h2 { font-size: clamp(2rem, 6vw, 8rem); }
+h3 { font-size: clamp(1.5rem, 4vw, 4rem); }
+
+/* ─── Text selection ─────────────────────────── */
+::selection {
+  background: var(--gold);
+  color: #fff;
 }
 
+/* ─── Scrollbar ──────────────────────────────── */
+::-webkit-scrollbar { display: none; }
 html {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.text-gold {
-  color: #B8860B;
+/* ─── Scroll progress bar (top) ─────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  z-index: 9996;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
 }
 
-.bg-gold {
-  background-color: #B8860B;
+/* ─── Utilities ──────────────────────────────── */
+.text-gold  { color: var(--gold); }
+.bg-gold    { background-color: var(--gold); }
+.font-syncopate { font-family: var(--font-syncopate), sans-serif; }
+.font-outfit    { font-family: var(--font-outfit), sans-serif; }
+
+/* ─── Glassmorphism Helpers ──────────────────── */
+.glass {
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-light {
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(26, 24, 22, 0.04);
+}
+
+/* ─── Clip Reveal Helpers ────────────────────── */
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
+}
+.clip-revealed {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ─── Image Hover Zoom ───────────────────────── */
+.img-zoom img {
+  transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.img-zoom:hover img { transform: scale(1.08); }
+
+/* ─── Button Fill Animation ──────────────────── */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.5s;
+}
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 0;
+}
+.btn-fill:hover::before { transform: scaleX(1); }
+.btn-fill > * { position: relative; z-index: 1; }
+
+/* ─── Scroll Indicator Animation ─────────────── */
+@keyframes scroll-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+.animate-scroll-line {
+  animation: scroll-line 2s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+
+/* ─── Easing Utilities ───────────────────────── */
+.ease-expo {
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ease-luxury {
+  transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ─── Split Text Character Styling ───────────── */
+.split-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ─── Magnetic Element Styling ───────────────── */
+.magnetic {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ─── Reveal Mask ────────────────────────────── */
+.reveal-mask {
+  overflow: hidden;
+}
+.reveal-mask > * {
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+/* ─── Subtle line animations ─────────────────── */
+@keyframes line-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(184, 134, 11, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(184, 134, 11, 0.6); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ─── Parallax perspective container ─────────── */
+.perspective-container {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
 }
