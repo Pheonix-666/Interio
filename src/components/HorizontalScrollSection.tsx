@@ -165,7 +165,7 @@ export default function HorizontalScrollSection() {
                 alt="Gallery 2" 
                 fill 
                 sizes="(max-width: 768px) 90vw, 55vw" 
-                priority
+                loading="lazy"
                 className="object-cover" 
               />
             </div>
@@ -175,6 +175,7 @@ export default function HorizontalScrollSection() {
                 alt="Gallery 3" 
                 fill 
                 sizes="(max-width: 768px) 60vw, 30vw" 
+                loading="lazy"
                 className="object-cover" 
               />
             </div>
@@ -188,6 +189,7 @@ export default function HorizontalScrollSection() {
                 alt="Gallery 4" 
                 fill 
                 sizes="(max-width: 768px) 75vw, 35vw" 
+                loading="lazy"
                 className="object-cover" 
               />
             </div>
@@ -197,6 +199,7 @@ export default function HorizontalScrollSection() {
                 alt="Gallery 5" 
                 fill 
                 sizes="(max-width: 768px) 100vw, 60vw" 
+                loading="lazy"
                 className="object-cover" 
               />
             </div>
@@ -214,6 +217,8 @@ export default function HorizontalScrollSection() {
                 src="/img2.jpg" 
                 alt="Architectural Process" 
                 fill 
+                sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
                 className="object-cover opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816]/40 to-transparent"></div>
@@ -248,6 +253,8 @@ export default function HorizontalScrollSection() {
               src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop" 
               alt="Luxury Masterpiece" 
               fill 
+              sizes="100vw"
+              loading="lazy"
               className="object-cover transition-transform duration-[5s] ease-out group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] via-[#1A1816]/20 to-transparent"></div>

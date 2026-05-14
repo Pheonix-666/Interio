@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#F5F5F5]">
       <Navbar />
-      
+
       {/* 1. Spline Hero Section (Vertical) */}
       <SplineHero />
 

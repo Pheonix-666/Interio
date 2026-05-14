@@ -7,8 +7,6 @@ export default function PageLoader() {
   const loaderRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -17,67 +15,49 @@ export default function PageLoader() {
     const logo = logoRef.current;
     if (!loader || !bar || !logo) return;
 
-    let isLoaded = false;
-    const obj = { val: 0 };
-
-    // Animate counter gradually up to 90%
-    const counterAnim = gsap.to(obj, {
-      val: 90,
-      duration: 4,
-      ease: 'power1.out',
-      onUpdate: () => setCount(Math.round(obj.val)),
-    });
-
-    // Progress bar up to 90%
-    const barAnim = gsap.to(bar, { 
-      scaleX: 0.9, 
-      duration: 4, 
-      ease: 'power1.out', 
-      transformOrigin: 'left center' 
-    });
-
-    // Logo reveal
+    // Quick logo reveal
     gsap.fromTo(logo,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.3 }
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
     );
 
-    const finishLoading = () => {
-      if (isLoaded) return;
-      isLoaded = true;
-      
-      counterAnim.kill();
-      barAnim.kill();
-      
+    // Fast progress bar — completes in 0.8s
+    gsap.to(bar, {
+      scaleX: 1,
+      duration: 0.8,
+      ease: 'power2.inOut',
+      transformOrigin: 'left center'
+    });
+
+    const dismiss = () => {
       const tl = gsap.timeline();
-      
-      // Fast finish to 100%
-      tl.to(obj, {
-        val: 100,
-        duration: 0.4,
-        onUpdate: () => setCount(Math.round(obj.val))
-      })
-      .to(bar, { scaleX: 1, duration: 0.4 }, "-=0.4")
-      .to(logo, { y: -30, opacity: 0, duration: 0.6, ease: 'power3.in', delay: 0.1 })
-      .to(loader, {
-        yPercent: -100,
-        duration: 0.8,
-        ease: 'power4.inOut',
-        onComplete: () => setDone(true),
-      });
+      tl.to(logo, { y: -20, opacity: 0, duration: 0.3, ease: 'power3.in' })
+        .to(loader, {
+          yPercent: -100,
+          duration: 0.6,
+          ease: 'power4.inOut',
+          onComplete: () => setDone(true),
+        }, '-=0.1');
     };
 
-    // Wait for window load or max 6 seconds
+    // Dismiss after 1s OR on window load — whichever is first
+    const timeout = setTimeout(dismiss, 1000);
+
+    const onLoad = () => {
+      clearTimeout(timeout);
+      // Small delay so bar animation finishes
+      setTimeout(dismiss, 200);
+    };
+
     if (document.readyState === 'complete') {
-      finishLoading();
+      clearTimeout(timeout);
+      setTimeout(dismiss, 300);
     } else {
-      window.addEventListener('load', finishLoading);
+      window.addEventListener('load', onLoad);
     }
-    
-    const timeout = setTimeout(finishLoading, 6000);
 
     return () => {
-      window.removeEventListener('load', finishLoading);
+      window.removeEventListener('load', onLoad);
       clearTimeout(timeout);
     };
   }, []);
@@ -109,12 +89,8 @@ export default function PageLoader() {
 
       {/* Progress bar */}
       <div className="absolute bottom-16 left-12 right-12">
-        <div className="flex justify-between mb-3">
-          <span className="font-outfit text-[10px] uppercase tracking-[0.3em] text-white/30">Loading</span>
-          <span className="font-syncopate text-[10px] text-white/30">{count}%</span>
-        </div>
         <div className="w-full h-[1px] bg-white/10 overflow-hidden">
-          <div ref={barRef} className="h-full bg-[#B8860B] w-full" style={{ transformOrigin: 'left' }} />
+          <div ref={barRef} className="h-full bg-[#B8860B] w-full scale-x-0" style={{ transformOrigin: 'left' }} />
         </div>
       </div>
     </div>

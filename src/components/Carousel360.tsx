@@ -8,11 +8,11 @@ import Image from 'next/image';
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { id: 1, title: 'Oakhaven Estate', category: 'Private Residence', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop' },
-  { id: 2, title: 'The Azure Retreat', category: 'Hotels & Resorts', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600&auto=format&fit=crop' },
-  { id: 3, title: 'Lumina Penthouse', category: 'Luxury Apartment', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1600&auto=format&fit=crop' },
-  { id: 4, title: 'Minimalist Atelier', category: 'Commercial Space', image: 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=1600&auto=format&fit=crop' },
-  { id: 5, title: 'Heritage Villa', category: 'Restoration', image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1600&auto=format&fit=crop' },
+  { id: 1, title: 'Oakhaven Estate', category: 'Private Residence', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop' },
+  { id: 2, title: 'The Azure Retreat', category: 'Hotels & Resorts', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop' },
+  { id: 3, title: 'Lumina Penthouse', category: 'Luxury Apartment', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop' },
+  { id: 4, title: 'Minimalist Atelier', category: 'Commercial Space', image: 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=800&auto=format&fit=crop' },
+  { id: 5, title: 'Heritage Villa', category: 'Restoration', image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop' },
 ];
 
 export default function Carousel360() {
@@ -118,6 +118,7 @@ export default function Carousel360() {
                 alt={project.title} 
                 fill 
                 sizes="(max-width: 768px) 280px, 450px"
+                loading="lazy"
                 className="object-cover transition-transform duration-[4s] ease-out group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-40"></div>

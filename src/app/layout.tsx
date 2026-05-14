@@ -34,7 +34,7 @@ export default function RootLayout({
       className={`${syncopate.variable} ${outfit.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body 
+      <body
         className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-outfit"
         suppressHydrationWarning
       >

@@ -86,7 +86,8 @@ export default function DetailsSection() {
             src="/img2.jpg" 
             alt="Interior Detail View" 
             fill 
-            sizes="(max-width: 1024px) 100vw, 1000px"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            loading="lazy"
             className="object-cover transition-transform duration-[4s] group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-[#1A1816]/5 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0"></div>
@@ -155,7 +156,8 @@ export default function DetailsSection() {
             src="/luxury_material_palette_1778055122403.png" 
             alt="Material Palette" 
             fill 
-            sizes="(max-width: 1024px) 100vw, 1000px"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            loading="lazy"
             className="object-cover transition-transform duration-[4s] group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-[#1A1816]/5 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0"></div>

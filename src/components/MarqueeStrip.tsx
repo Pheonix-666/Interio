@@ -1,8 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-
 const items = [
   'Architectural Precision',
   '✦',
@@ -44,10 +41,11 @@ export default function MarqueeStrip({
       <div className="absolute inset-x-0 top-0 h-[1px]" style={{ background: `${textColor}15` }} />
       <div className="absolute inset-x-0 bottom-0 h-[1px]" style={{ background: `${textColor}15` }} />
 
-      <motion.div
+      <div
         className="flex whitespace-nowrap"
-        animate={{ x: direction === 'left' ? ['0%', '-33.33%'] : ['-33.33%', '0%'] }}
-        transition={{ repeat: Infinity, duration: speed, ease: 'linear' }}
+        style={{
+          animation: `marquee-${direction} ${speed}s linear infinite`,
+        }}
       >
         {repeated.map((item, i) => (
           <span
@@ -58,7 +56,18 @@ export default function MarqueeStrip({
             {item}
           </span>
         ))}
-      </motion.div>
+      </div>
+
+      <style jsx>{`
+        @keyframes marquee-left {
+          from { transform: translateX(0); }
+          to { transform: translateX(-33.33%); }
+        }
+        @keyframes marquee-right {
+          from { transform: translateX(-33.33%); }
+          to { transform: translateX(0); }
+        }
+      `}</style>
     </div>
   );
 }

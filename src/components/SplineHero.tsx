@@ -113,8 +113,8 @@ export default function SplineHero() {
           loop
           muted
           playsInline
-          preload="metadata"
-          poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop"
+          preload="none"
+          poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1280&auto=format&fit=crop"
           className="w-full h-full object-cover"
         >
           <source src="/hero.mp4" type="video/mp4" />
