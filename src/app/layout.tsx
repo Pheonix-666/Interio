@@ -32,8 +32,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${syncopate.variable} ${outfit.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-outfit">
+      <body 
+        className="min-h-full flex flex-col bg-[#F5F5F5] text-[#1A1816] font-outfit"
+        suppressHydrationWarning
+      >
         <PageLoader />
         <CustomCursor />
         <SmoothScroll>{children}</SmoothScroll>

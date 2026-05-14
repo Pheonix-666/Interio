@@ -50,9 +50,9 @@ export default function CustomCursor() {
 
       if (!isVisible) setIsVisible(true);
 
-      // Add trail point
+      // Add trail point - limited for performance
       trailPointsRef.current.push({ x: mouseX, y: mouseY, age: 0 });
-      if (trailPointsRef.current.length > 50) {
+      if (trailPointsRef.current.length > 40) {
         trailPointsRef.current.shift();
       }
 
@@ -64,16 +64,18 @@ export default function CustomCursor() {
         gsap.to(cursor, {
           x: stuckPosRef.current.x,
           y: stuckPosRef.current.y,
-          duration: 0.25,
-          ease: 'power3.out'
+          duration: 0.3,
+          ease: 'power3.out',
+          overwrite: 'auto'
         });
       } else {
         // Normal: smooth ring follows
         gsap.to(cursor, {
           x: mouseX,
           y: mouseY,
-          duration: 0.65,
-          ease: 'power3.out'
+          duration: 0.5,
+          ease: 'power3.out',
+          overwrite: 'auto'
         });
       }
     };
@@ -85,10 +87,10 @@ export default function CustomCursor() {
 
       const points = trailPointsRef.current;
 
-      // Age out points
+      // Age out points faster
       for (let i = points.length - 1; i >= 0; i--) {
-        points[i].age += 1;
-        if (points[i].age > 30) {
+        points[i].age += 1.5;
+        if (points[i].age > 25) {
           points.splice(i, 1);
         }
       }
@@ -110,8 +112,8 @@ export default function CustomCursor() {
       const lastPoint = points[points.length - 1];
       ctx2d.lineTo(lastPoint.x, lastPoint.y);
 
-      ctx2d.strokeStyle = 'rgba(184, 134, 11, 0.12)';
-      ctx2d.lineWidth = 1.5;
+      ctx2d.strokeStyle = 'rgba(184, 134, 11, 0.15)';
+      ctx2d.lineWidth = 1;
       ctx2d.lineCap = 'round';
       ctx2d.stroke();
 
@@ -119,56 +121,61 @@ export default function CustomCursor() {
     };
     rafId = requestAnimationFrame(drawTrail);
 
-    const onEnterLink = (e: Event) => {
-      const target = e.currentTarget as HTMLElement;
-      const cursorText = target.getAttribute('data-cursor') || '';
-      setLabel(cursorText);
+    // Optimized event delegation for interactive elements
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a, button, [data-cursor], input, textarea, .magnetic');
+      if (target) {
+        const cursorText = target.getAttribute('data-cursor') || '';
+        setLabel(cursorText);
 
-      // Magnetic: stick to element center
-      const rect = target.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      isStuckRef.current = true;
-      stuckPosRef.current = { x: centerX, y: centerY };
+        const rect = target.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        isStuckRef.current = true;
+        stuckPosRef.current = { x: centerX, y: centerY };
 
-      gsap.to(cursor, {
-        width: Math.max(rect.width + 24, 60),
-        height: Math.max(rect.height + 24, 60),
-        borderRadius: rect.width > rect.height * 2 ? '8px' : '50%',
-        backgroundColor: 'rgba(184, 134, 11, 0.06)',
-        borderColor: 'rgba(184, 134, 11, 0.3)',
-        x: centerX,
-        y: centerY,
-        duration: 0.45,
-        ease: 'power3.out'
-      });
-      gsap.to(dot, { scale: 0, opacity: 0, duration: 0.2 });
+        gsap.to(cursor, {
+          width: Math.max(rect.width + 20, 50),
+          height: Math.max(rect.height + 20, 50),
+          borderRadius: rect.width > rect.height * 1.5 ? '4px' : '50%',
+          backgroundColor: 'rgba(184, 134, 11, 0.08)',
+          borderColor: 'rgba(184, 134, 11, 0.4)',
+          duration: 0.4,
+          ease: 'power3.out',
+          overwrite: 'auto'
+        });
+        gsap.to(dot, { scale: 0, opacity: 0, duration: 0.2, overwrite: 'auto' });
+      }
     };
 
-    const onLeaveLink = () => {
-      setLabel('');
-      isStuckRef.current = false;
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a, button, [data-cursor], input, textarea, .magnetic');
+      if (target) {
+        setLabel('');
+        isStuckRef.current = false;
 
-      gsap.to(cursor, {
-        width: 44,
-        height: 44,
-        borderRadius: '50%',
-        backgroundColor: 'transparent',
-        borderColor: 'rgba(184, 134, 11, 0.6)',
-        duration: 0.45,
-        ease: 'power3.out'
-      });
-      gsap.to(dot, { scale: 1, opacity: 1, duration: 0.3 });
+        gsap.to(cursor, {
+          width: 44,
+          height: 44,
+          borderRadius: '50%',
+          backgroundColor: 'transparent',
+          borderColor: 'rgba(184, 134, 11, 0.6)',
+          duration: 0.4,
+          ease: 'power3.out',
+          overwrite: 'auto'
+        });
+        gsap.to(dot, { scale: 1, opacity: 1, duration: 0.3, overwrite: 'auto' });
+      }
     };
 
     const onMouseDown = () => {
-      gsap.to(cursor, { scale: 0.75, duration: 0.15, ease: 'power2.out' });
-      gsap.to(dot, { scale: 2.5, duration: 0.15 });
+      gsap.to(cursor, { scale: 0.8, duration: 0.1, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to(dot, { scale: 2, duration: 0.1, overwrite: 'auto' });
     };
 
     const onMouseUp = () => {
-      gsap.to(cursor, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
-      gsap.to(dot, { scale: 1, duration: 0.3 });
+      gsap.to(cursor, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+      gsap.to(dot, { scale: 1, duration: 0.2, overwrite: 'auto' });
     };
 
     const onMouseEnterWindow = () => setIsVisible(true);
@@ -177,43 +184,21 @@ export default function CustomCursor() {
     window.addEventListener('mousemove', moveCursor);
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
     document.addEventListener('mouseenter', onMouseEnterWindow);
     document.addEventListener('mouseleave', onMouseLeaveWindow);
-
-    // Observe dynamic content for interactables
-    const refreshInteractables = () => {
-      const els = document.querySelectorAll('a, button, [data-cursor], input, textarea, .magnetic');
-      els.forEach(el => {
-        el.addEventListener('mouseenter', onEnterLink);
-        el.addEventListener('mouseleave', onLeaveLink);
-      });
-      return els;
-    };
-
-    let interactables = refreshInteractables();
-
-    const observer = new MutationObserver(() => {
-      interactables.forEach(el => {
-        el.removeEventListener('mouseenter', onEnterLink);
-        el.removeEventListener('mouseleave', onLeaveLink);
-      });
-      interactables = refreshInteractables();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
       document.removeEventListener('mouseenter', onMouseEnterWindow);
       document.removeEventListener('mouseleave', onMouseLeaveWindow);
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(rafId);
-      interactables.forEach(el => {
-        el.removeEventListener('mouseenter', onEnterLink);
-        el.removeEventListener('mouseleave', onLeaveLink);
-      });
-      observer.disconnect();
     };
   }, [isVisible]);
 

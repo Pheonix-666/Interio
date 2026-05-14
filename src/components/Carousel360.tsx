@@ -40,7 +40,8 @@ export default function Carousel360() {
     gsap.set(carouselRef.current, { 
       perspective: 2000, 
       transformStyle: "preserve-3d",
-      rotationX: -10 // Deeper tilt for more drama
+      rotationX: -10, // Deeper tilt for more drama
+      force3D: true
     });
     
     cards.forEach((card, i) => {
@@ -48,6 +49,8 @@ export default function Carousel360() {
         rotationY: i * angle,
         z: radius,
         transformOrigin: `50% 50% ${-radius}px`,
+        force3D: true,
+        willChange: 'transform'
       });
     });
 
@@ -56,12 +59,14 @@ export default function Carousel360() {
       gsap.to(carouselRef.current, {
         rotationY: -360, // Rotate full circle
         ease: "none",
+        force3D: true,
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=5000", // Slower rotation for better readability
-          scrub: 1.5,
+          end: "+=4000", // Slightly faster for responsiveness but still smooth
+          scrub: 1.2,
           pin: true,
+          anticipatePin: 1,
         }
       });
 

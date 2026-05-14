@@ -62,6 +62,7 @@ export default function HorizontalScrollSection() {
             clipPath: 'inset(0% 0% 0% 0%)',
             scale: 1,
             ease: "power2.out",
+            force3D: true,
             scrollTrigger: {
               trigger: img,
               start: "left center+=200",
@@ -70,19 +71,27 @@ export default function HorizontalScrollSection() {
         );
       });
 
-      // Subtle mouse tilt for images
+      // Optimized mouse tilt for images - Use a selector instead of querying every frame
       let mouseX = 0;
       let mouseY = 0;
+      
+      // Cache the elements once
+      const tiltImages = gsap.utils.toArray('.parallax-row img');
+      
       const updateTilt = () => {
+        if (tiltImages.length === 0) return;
+        
         const xPos = (mouseX / window.innerWidth - 0.5) * 15;
         const yPos = (mouseY / window.innerHeight - 0.5) * 15;
 
-        gsap.to('.parallax-row img', {
+        // Use a faster tween for the ticker
+        gsap.to(tiltImages, {
           rotateY: xPos,
           rotateX: -yPos,
-          duration: 1.5,
+          duration: 1.2,
           ease: "power2.out",
-          stagger: 0.02
+          stagger: 0.01,
+          overwrite: 'auto'
         });
       };
 
@@ -91,8 +100,11 @@ export default function HorizontalScrollSection() {
         mouseY = e.clientY;
       };
 
-      gsap.ticker.add(updateTilt);
-      window.addEventListener('mousemove', handleMouseMove);
+      // Only add ticker if not on mobile
+      if (window.innerWidth > 768) {
+        gsap.ticker.add(updateTilt);
+        window.addEventListener('mousemove', handleMouseMove);
+      }
 
       return () => {
         window.removeEventListener('mousemove', handleMouseMove);

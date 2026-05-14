@@ -59,15 +59,17 @@ export default function SplineHero() {
         gsap.to(".hero-overlay-inner", {
           x: xPos,
           y: yPos,
-          duration: 2,
-          ease: "power2.out"
+          duration: 1.5,
+          ease: "power2.out",
+          overwrite: 'auto'
         });
         
         gsap.to(videoRef.current, {
           x: -xPos * 0.5,
           y: -yPos * 0.5,
-          duration: 2,
-          ease: "power2.out"
+          duration: 1.5,
+          ease: "power2.out",
+          overwrite: 'auto'
         });
       };
 
