@@ -6,12 +6,14 @@ const syncopate = Syncopate({
   variable: "--font-syncopate",
   subsets: ["latin"],
   weight: ["400", "700"],
+  display: 'swap',
 });
 
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {

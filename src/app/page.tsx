@@ -1,14 +1,27 @@
 import Navbar from '@/components/Navbar';
 import SplineHero from '@/components/SplineHero';
-import HorizontalScrollSection from '@/components/HorizontalScrollSection';
-import Carousel360 from '@/components/Carousel360';
 import Footer from '@/components/Footer';
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
-import DetailsSection from '@/components/DetailsSection';
-import StatsSection from '@/components/StatsSection';
-import MarqueeStrip from '@/components/MarqueeStrip';
-import CTASection from '@/components/CTASection';
+// Lazy-load below-the-fold sections to reduce initial JS bundle
+const StatsSection = dynamic(() => import('@/components/StatsSection'), {
+  loading: () => <div className="h-64 bg-white" />,
+});
+const HorizontalScrollSection = dynamic(() => import('@/components/HorizontalScrollSection'), {
+  loading: () => <div className="h-screen bg-[#F8F8F8]" />,
+});
+const MarqueeStrip = dynamic(() => import('@/components/MarqueeStrip'), {
+  loading: () => <div className="h-12 bg-[#1A1816]" />,
+});
+const DetailsSection = dynamic(() => import('@/components/DetailsSection'), {
+  loading: () => <div className="h-screen bg-[#F8F8F8]" />,
+});
+const Carousel360 = dynamic(() => import('@/components/Carousel360'), {
+  loading: () => <div className="h-screen bg-[#F8F8F8]" />,
+});
+const CTASection = dynamic(() => import('@/components/CTASection'), {
+  loading: () => <div className="h-screen bg-[#1A1816]" />,
+});
 
 export default function Home() {
   return (
