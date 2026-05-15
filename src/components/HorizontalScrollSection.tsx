@@ -56,7 +56,7 @@ export default function HorizontalScrollSection() {
 
       // Image reveal within the horizontal scroll
       gsap.utils.toArray('.reveal-img').forEach((img: any) => {
-        gsap.fromTo(img, 
+        gsap.fromTo(img,
           { clipPath: 'inset(10% 10% 10% 10%)', scale: 1.2 },
           {
             clipPath: 'inset(0% 0% 0% 0%)',
@@ -74,13 +74,13 @@ export default function HorizontalScrollSection() {
       // Optimized mouse tilt for images - Use a selector instead of querying every frame
       let mouseX = 0;
       let mouseY = 0;
-      
+
       // Cache the elements once
       const tiltImages = gsap.utils.toArray('.parallax-row img');
-      
+
       const updateTilt = () => {
         if (tiltImages.length === 0) return;
-        
+
         const xPos = (mouseX / window.innerWidth - 0.5) * 15;
         const yPos = (mouseY / window.innerHeight - 0.5) * 15;
 
@@ -128,7 +128,7 @@ export default function HorizontalScrollSection() {
 
       <div
         ref={scrollWrapperRef}
-        className="flex h-full items-center w-max px-16 md:px-48 gap-[25vw] md:gap-[20vw]"
+        className="flex h-full items-center w-max pl-16 md:pl-48 pr-0 gap-[25vw] md:gap-[20vw]"
       >
         {/* Intro Panel */}
         <div className="w-[85vw] md:w-[40vw] flex flex-col justify-center shrink-0">
@@ -150,33 +150,33 @@ export default function HorizontalScrollSection() {
           {/* Row 1 */}
           <div className="parallax-row flex gap-12 md:gap-32 items-end h-[30vh] md:h-[35vh] -translate-x-32" style={{ willChange: 'transform' }}>
             <div className="relative w-[40vw] md:w-[18vw] h-[80%] overflow-hidden rounded-sm bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] shrink-0 translate-y-12">
-              <Image 
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop" 
-                alt="Gallery 1" 
-                fill 
-                sizes="(max-width: 768px) 40vw, 18vw" 
+              <Image
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=800&auto=format&fit=crop"
+                alt="Gallery 1"
+                fill
+                sizes="(max-width: 768px) 40vw, 18vw"
                 priority
-                className="object-cover" 
+                className="object-cover"
               />
             </div>
             <div className="relative w-[90vw] md:w-[55vw] h-full overflow-hidden rounded-sm bg-white shadow-[0_30px_70px_rgba(0,0,0,0.15)] shrink-0">
-              <Image 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" 
-                alt="Gallery 2" 
-                fill 
-                sizes="(max-width: 768px) 90vw, 55vw" 
+              <Image
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"
+                alt="Gallery 2"
+                fill
+                sizes="(max-width: 768px) 90vw, 55vw"
                 loading="lazy"
-                className="object-cover" 
+                className="object-cover"
               />
             </div>
             <div className="relative w-[60vw] md:w-[30vw] h-[90%] overflow-hidden rounded-sm bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] shrink-0 -translate-y-12">
-              <Image 
-                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop" 
-                alt="Gallery 3" 
-                fill 
-                sizes="(max-width: 768px) 60vw, 30vw" 
+              <Image
+                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop"
+                alt="Gallery 3"
+                fill
+                sizes="(max-width: 768px) 60vw, 30vw"
                 loading="lazy"
-                className="object-cover" 
+                className="object-cover"
               />
             </div>
           </div>
@@ -184,23 +184,23 @@ export default function HorizontalScrollSection() {
           {/* Row 2 */}
           <div className="parallax-row flex gap-12 md:gap-32 items-center h-[40vh] md:h-[50vh] translate-x-32" style={{ willChange: 'transform' }}>
             <div className="relative w-[75vw] md:w-[35vw] h-full overflow-hidden rounded-sm bg-white shadow-[0_40px_80px_rgba(0,0,0,0.15)] shrink-0 -translate-y-16">
-              <Image 
-                src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=1200&auto=format&fit=crop" 
-                alt="Gallery 4" 
-                fill 
-                sizes="(max-width: 768px) 75vw, 35vw" 
+              <Image
+                src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?q=80&w=1200&auto=format&fit=crop"
+                alt="Gallery 4"
+                fill
+                sizes="(max-width: 768px) 75vw, 35vw"
                 loading="lazy"
-                className="object-cover" 
+                className="object-cover"
               />
             </div>
             <div className="relative w-[100vw] md:w-[60vw] h-[85%] overflow-hidden rounded-sm bg-white shadow-[0_30px_60px_rgba(0,0,0,0.1)] shrink-0">
-              <Image 
-                src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop" 
-                alt="Gallery 5" 
-                fill 
-                sizes="(max-width: 768px) 100vw, 60vw" 
+              <Image
+                src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop"
+                alt="Gallery 5"
+                fill
+                sizes="(max-width: 768px) 100vw, 60vw"
                 loading="lazy"
-                className="object-cover" 
+                className="object-cover"
               />
             </div>
             <div className="relative w-[50vw] md:w-[25vw] h-[70%] overflow-hidden rounded-sm bg-white shadow-[0_20px_40px_rgba(0,0,0,0.2)] flex items-center justify-center p-12 bg-[#1A1816] shrink-0 translate-y-20">
@@ -213,10 +213,10 @@ export default function HorizontalScrollSection() {
         <div className="w-[85vw] md:w-[65vw] h-screen flex items-center shrink-0">
           <div className="relative w-full h-[65vh] md:h-[75vh] flex flex-col md:flex-row gap-16 items-center">
             <div className="relative w-full md:w-1/2 h-full overflow-hidden rounded-sm shadow-[0_40px_100px_rgba(0,0,0,0.2)]">
-              <Image 
-                src="/img2.jpg" 
-                alt="Architectural Process" 
-                fill 
+              <Image
+                src="/img2.jpg"
+                alt="Architectural Process"
+                fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 loading="lazy"
                 className="object-cover opacity-90"
@@ -247,12 +247,12 @@ export default function HorizontalScrollSection() {
         </div>
 
         {/* Panel 4: Final Reveal */}
-        <div className="w-[100vw] h-screen flex items-center justify-center shrink-0 px-12 md:px-32">
+        <div className="w-[100vw] h-screen flex items-center justify-center shrink-0 pl-12 pr-0 md:pl-32">
           <div className="relative w-full h-[75vh] md:h-[85vh] overflow-hidden rounded-sm group shadow-[0_50px_150px_rgba(0,0,0,0.3)]">
-            <Image 
-              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop" 
-              alt="Luxury Masterpiece" 
-              fill 
+            <Image
+              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop"
+              alt="Luxury Masterpiece"
+              fill
               sizes="100vw"
               loading="lazy"
               className="object-cover transition-transform duration-[5s] ease-out group-hover:scale-110"
@@ -264,7 +264,7 @@ export default function HorizontalScrollSection() {
                 <span className="font-outfit text-[10px] md:text-xs tracking-[0.6em] uppercase text-[#F5F5F5] font-bold">The Outcome</span>
               </div>
               <h2 className="font-syncopate text-6xl md:text-[10vw] text-[#F5F5F5] leading-[0.8] mb-12 uppercase font-bold tracking-tighter">SILENT<br /><span className="text-[#B8860B]">LUXURY.</span></h2>
-              <button 
+              <button
                 data-cursor="Discover"
                 className="group relative px-12 py-6 overflow-hidden border border-white/20 bg-white/5 backdrop-blur-md"
               >
